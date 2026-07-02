@@ -1,0 +1,516 @@
+/* ============================================================
+   Register.module.css
+   MediSlotBook — registration page
+   Split layout: branded illustration aside + form panel.
+   Added advanced motion: page fade-in, aside gradient shift,
+   floating illustration, staggered form fields, button shimmer,
+   and floating decorative orbs. All animations respect
+   `prefers-reduced-motion`.
+   ============================================================ */
+
+.page {
+  --teal-900: #0d4d4d;
+  --teal-700: #146c6c;
+  --teal-600: #0f5454;
+  --teal-500: #2f9e8f;
+  --mint-50: #f4f8f7;
+  --ink: #16302e;
+  --ink-soft: #5a716e;
+  --border: #dde6e4;
+  --error: #c0392b;
+  --error-bg: #fdecea;
+  --error-border: #f4c6c1;
+  --accent: #f2a65a;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--mint-50);
+
+  /* ===== PAGE ENTRANCE: fade in + subtle scale ===== */
+  animation: pageFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes pageFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================================
+   Aside — brand panel (with gradient motion & floating orbs)
+   ============================================================ */
+
+.aside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.75rem 1.75rem 1.5rem;
+  background: linear-gradient(160deg, var(--teal-900) 0%, var(--teal-700) 55%, var(--teal-500) 140%);
+  background-size: 200% 200%;
+  color: #ffffff;
+  overflow: hidden;
+
+  /* ===== GRADIENT SHIFT + SLIDE IN ===== */
+  animation: gradientShift 12s ease-in-out infinite alternate,
+             asideSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes asideSlideIn {
+  0%   { opacity: 0; transform: translateX(-30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- floating decorative orbs ---- */
+.aside::before,
+.aside::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  pointer-events: none;
+  animation: orbFloat 14s ease-in-out infinite alternate;
+}
+.aside::before {
+  width: 220px;
+  height: 220px;
+  background: #fff;
+  top: -60px;
+  right: -60px;
+  animation-delay: 0s;
+}
+.aside::after {
+  width: 160px;
+  height: 160px;
+  background: var(--accent);
+  bottom: -40px;
+  left: -40px;
+  animation-delay: -5s;
+}
+
+@keyframes orbFloat {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(20px, -20px) scale(1.15); }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  text-decoration: none;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+.logoText strong {
+  font-weight: 700;
+}
+
+.illustrationWrap {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+.illustration {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  /* ===== FLOATING ILLUSTRATION ===== */
+  animation: floatY 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes floatY {
+  0%   { transform: translateY(0px); }
+  100% { transform: translateY(-14px); }
+}
+
+.asideCopy {
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.tagline span {
+  color: var(--accent);
+}
+
+.taglineSub {
+  margin: 0.6rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ============================================================
+   Form panel
+   ============================================================ */
+
+.formPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.25rem 1.25rem 3rem;
+  background: var(--mint-50);
+}
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: 100%;
+  max-width: 26rem;
+  padding: 2.25rem 2rem 2rem;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(16, 40, 38, 0.04), 0 12px 32px -16px rgba(16, 40, 38, 0.18);
+
+  /* ===== FORM ENTRANCE (slide up) ===== */
+  animation: formSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes formSlideUp {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- staggered children (each field fades in with delay) ---- */
+.form > * {
+  opacity: 0;
+  animation: childStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.form > *:nth-child(1) { animation-delay: 0.10s; }
+.form > *:nth-child(2) { animation-delay: 0.18s; }
+.form > *:nth-child(3) { animation-delay: 0.26s; }
+.form > *:nth-child(4) { animation-delay: 0.34s; }
+.form > *:nth-child(5) { animation-delay: 0.42s; }
+.form > *:nth-child(6) { animation-delay: 0.50s; }
+.form > *:nth-child(7) { animation-delay: 0.58s; }
+.form > *:nth-child(8) { animation-delay: 0.66s; }
+.form > *:nth-child(9) { animation-delay: 0.74s; }
+.form > *:nth-child(10) { animation-delay: 0.82s; }
+
+@keyframes childStagger {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.formHeading {
+  margin-bottom: 0.25rem;
+}
+.formHeading h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.formHeading p {
+  margin: 0.3rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+/* ---------------- Inputs ---------------- */
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--ink);
+  background: #fbfdfc;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease,
+              background-color 0.25s ease, transform 0.15s ease;
+}
+
+.input::placeholder {
+  color: #8aa19d;
+}
+
+.input:hover {
+  border-color: #c3d3d0;
+}
+
+.input:focus {
+  background: #ffffff;
+  border-color: var(--teal-700);
+  box-shadow: 0 0 0 4px rgba(20, 108, 108, 0.13);
+  transform: scale(1.005);
+}
+
+.input:disabled {
+  background: #f1f4f3;
+  color: #9aaba8;
+  cursor: not-allowed;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0px 1000px #fbfdfc inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.inputError {
+  border-color: #d6534a;
+  background: #fdf4f3;
+}
+.inputError:focus {
+  border-color: #d6534a;
+  box-shadow: 0 0 0 4px rgba(214, 83, 74, 0.12);
+}
+
+/* ---------------- Messages ---------------- */
+
+.fieldError {
+  margin: -0.55rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--error);
+}
+
+.error {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #9c2c22;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-left: 3px solid #d6534a;
+  border-radius: 8px;
+}
+
+/* ---------------- Submit button ---------------- */
+
+.button {
+  margin-top: 0.4rem;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  background: var(--teal-700);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.25s ease, transform 0.15s ease,
+              box-shadow 0.25s ease;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--teal-600);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px rgba(20, 108, 108, 0.35);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(20, 108, 108, 0.25);
+}
+
+.button:disabled {
+  background: #7da9a6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---- button shimmer (sweeping light) ---- */
+.button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: rotate(25deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.button:hover:not(:disabled)::after {
+  left: 120%;
+}
+
+/* ---------------- Sign-in prompt ---------------- */
+
+.signinPrompt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #edf2f1;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.signinLink {
+  font-weight: 600;
+  color: var(--teal-700);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.signinLink:hover {
+  color: var(--teal-600);
+  transform: translateX(3px);
+  text-decoration: underline;
+}
+
+.signinLink:focus-visible {
+  outline: 2px solid var(--teal-700);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   Pulse line (SVG decoration inside aside)
+   ============================================================ */
+
+.pulseLine {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: draw-pulse 2.4s ease-out 0.3s forwards;
+}
+
+@keyframes draw-pulse {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ============================================================
+   Responsive — two-column layout from 900px up
+   ============================================================ */
+
+@media (min-width: 900px) {
+  .page {
+    flex-direction: row;
+  }
+
+  .aside {
+    width: 44%;
+    min-width: 360px;
+    max-width: 540px;
+    padding: 2.5rem 3rem 3rem;
+    justify-content: space-between;
+  }
+
+  .illustrationWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .tagline {
+    font-size: 2.1rem;
+  }
+
+  .formPanel {
+    flex: 1;
+    padding: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 2rem 1.25rem 1.75rem;
+    border-radius: 12px;
+  }
+
+  .aside {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .tagline {
+    font-size: 1.35rem;
+  }
+}
+
+/* ============================================================
+   Motion & accessibility — reduced‑motion support
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* disable animations on specific animated elements */
+  .page,
+  .aside,
+  .form,
+  .form > *,
+  .illustration,
+  .pulseLine,
+  .aside::before,
+  .aside::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .input,
+  .button {
+    transition: none !important;
+  }
+
+  .button::after {
+    display: none !important;
+  }
+
+  .pulseLine {
+    stroke-dashoffset: 0 !important;
+  }
+}

@@ -1,0 +1,386 @@
+/* ============================================================
+   Otp.module.css — MediSlotBook OTP page
+   Reference layout: top bar, hero illustration, card below.
+   ============================================================ */
+
+.page {
+  --teal-900: #0d4d4d;
+  --teal-700: #146c6c;
+  --teal-600: #0f5454;
+  --teal-500: #2f9e8f;
+  --mint-50: #f4f8f7;
+  --ink: #16302e;
+  --ink-soft: #5a716e;
+  --border: #dde6e4;
+  --error: #c0392b;
+  --error-bg: #fdecea;
+  --error-border: #f4c6c1;
+  --accent: #f2a65a;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  padding: 0 0 2.5rem;
+  background: #ffffff;
+  position: relative;
+}
+
+/* ── top bar ── */
+.backBtn {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f4f8f7;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  z-index: 10;
+}
+
+.backBtn:hover {
+  background: #e6f5f3;
+  transform: translateX(-2px);
+}
+
+.pageTitle {
+  margin: 1.25rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  animation: fadeDown 0.45s cubic-bezier(0.21, 0.91, 0.43, 1) both;
+}
+
+/* ── hero illustration ── */
+.heroWrap {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  animation: fadeIn 0.55s cubic-bezier(0.21, 0.91, 0.43, 1) 0.1s both;
+}
+
+.heroSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── card ── */
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeUp 0.5s cubic-bezier(0.21, 0.91, 0.43, 1) 0.2s both;
+}
+
+/* ── heading ── */
+.heading {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.subText {
+  margin: -0.25rem 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.emailHighlight {
+  color: var(--teal-700);
+  font-weight: 600;
+}
+
+/* ── 6-digit row ── */
+.digitRow {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+  margin: 0.25rem 0;
+}
+
+.digitBox {
+  width: 3rem;
+  height: 3.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-align: center;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1.8px solid #d0dedd;
+  border-radius: 12px;
+  outline: none;
+  caret-color: var(--teal-700);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.digitBox:focus {
+  border-color: var(--teal-700);
+  box-shadow: 0 0 0 4px rgba(20, 108, 108, 0.13);
+  transform: translateY(-2px);
+}
+
+.digitBoxFilled {
+  border-color: var(--teal-700);
+  background: #f0f9f7;
+  color: var(--teal-900);
+}
+
+.digitBoxError {
+  border-color: #d6534a !important;
+  background: #fdf4f3 !important;
+  box-shadow: none !important;
+}
+
+/* ── expiry ── */
+.expiryText {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.expiryTimer {
+  font-weight: 700;
+  color: var(--teal-700);
+  font-variant-numeric: tabular-nums;
+}
+
+.expiryExpired {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--error);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ── resend ── */
+.resendRow {
+  margin: -0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.resendBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--teal-700);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.resendBtn:hover:not(:disabled) {
+  color: var(--teal-600);
+  text-decoration: underline;
+}
+
+.resendBtnDisabled {
+  color: #a0bab8 !important;
+  cursor: not-allowed !important;
+  text-decoration: none !important;
+}
+
+/* ── error banner ── */
+.error {
+  width: 100%;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.875rem;
+  color: #9c2c22;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-left: 3px solid #d6534a;
+  border-radius: 8px;
+  text-align: left;
+  animation: shakeX 0.4s ease both;
+}
+
+@keyframes shakeX {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+/* ── submit button ── */
+.button {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 0.95rem 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background: var(--teal-700);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  margin-top: 0.25rem;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--teal-600);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(20, 108, 108, 0.3);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(20, 108, 108, 0.25);
+}
+
+.button:disabled {
+  background: #7da9a6;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: rotate(25deg);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+
+.button:hover:not(:disabled)::after {
+  left: 120%;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255,255,255,0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── security badge ── */
+.securityBadge {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  background: #f4f8f7;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+.badgeTitle {
+  margin: 0 0 0.15rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.badgeText {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* ── entrance animations ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── responsive ── */
+@media (max-width: 420px) {
+  .digitBox {
+    width: 2.55rem;
+    height: 3rem;
+    font-size: 1.3rem;
+    border-radius: 10px;
+  }
+
+  .digitRow { gap: 0.35rem; }
+
+  .heading { font-size: 1.3rem; }
+
+  .button {
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+  }
+}
+
+/* ── reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .pageTitle,
+  .heroWrap,
+  .card,
+  .error {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .digitBox,
+  .button,
+  .backBtn {
+    transition: none !important;
+  }
+
+  .button::after { display: none !important; }
+  .spinner { animation: none !important; }
+}
